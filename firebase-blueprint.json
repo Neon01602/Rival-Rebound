@@ -1,0 +1,100 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "A user of the platform (student or admin)",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "admin"] },
+        "isFlagged": { "type": "boolean" },
+        "isTerminated": { "type": "boolean" },
+        "lastActive": { "type": "string", "format": "date-time" },
+        "rollNumber": { "type": "string" },
+        "activeExamId": { "type": "string" },
+        "examStartTime": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Exam": {
+      "title": "Exam",
+      "description": "An examination container",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "isActive": { "type": "boolean" },
+        "timeLimit": { "type": "integer" }
+      },
+      "required": ["id", "name", "isActive"]
+    },
+    "Question": {
+      "title": "Question",
+      "description": "An MCQ question",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "examId": { "type": "string" },
+        "text": { "type": "string" },
+        "options": { "type": "array", "items": { "type": "string" } },
+        "correctAnswer": { "type": "integer" },
+        "difficulty": { "type": "string", "enum": ["easy", "medium", "hard"] },
+        "section": { "type": "string" }
+      },
+      "required": ["id", "examId", "text", "options", "correctAnswer", "difficulty", "section"]
+    },
+    "Response": {
+      "title": "Response",
+      "description": "A student's response to a question",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "examId": { "type": "string" },
+        "questionId": { "type": "string" },
+        "selectedOption": { "type": "integer" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "isCorrect": { "type": "boolean" },
+        "timeTaken": { "type": "number" },
+        "score": { "type": "number" }
+      },
+      "required": ["userId", "examId", "questionId", "selectedOption", "timestamp"]
+    },
+    "AdminConfig": {
+      "title": "AdminConfig",
+      "description": "Configuration for the admin user",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "passwordHash": { "type": "string" },
+        "hashcode": { "type": "string" },
+        "isInitialized": { "type": "boolean" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/questions/{questionId}": {
+      "schema": "Question",
+      "description": "MCQ questions"
+    },
+    "/responses/{responseId}": {
+      "schema": "Response",
+      "description": "User responses for analytics"
+    },
+    "/exams/{examId}": {
+      "schema": "Exam",
+      "description": "Examination containers"
+    },
+    "/config/admin": {
+      "schema": "AdminConfig",
+      "description": "Admin credentials and setup state"
+    }
+  }
+}
