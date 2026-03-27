@@ -315,7 +315,7 @@ function CompleteProfileView({ user, setUser }: { user: UserProfile, setUser: (u
                 value={rollNumber}
                 onChange={(e) => setRollNumber(e.target.value)}
                 placeholder="e.g. 2023001234"
-                className="input-field pl-16"
+                className="input-field pl-16 text-black"
               />
             </div>
           </div>
