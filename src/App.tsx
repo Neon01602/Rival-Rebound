@@ -1862,7 +1862,7 @@ function AdminDashboard({ user, adminConfig }: { user: UserProfile, adminConfig:
                             <td colSpan={5} className="px-8 py-10 text-center text-slate-400 font-medium text-sm italic">No response data yet.</td>
                           </tr>
                         ) : studentRankingData.map((item) => (
-                          <tr key={item.student.uid} className={`transition-colors ${item.rank <= 14 ? 'bg-green-50 hover:bg-green-100' : 'hover:bg-slate-50/60'}`}>
+                          <tr key={item.student.uid} className={`transition-colors ${item.rank <= 14 ? 'bg-green-100 hover:bg-green-200' : 'hover:bg-slate-50/60'}`}>
                             <td className="px-8 py-5">
                               <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm
                                 ${item.rank === 1 ? 'bg-amber-400 text-white' :
@@ -1881,6 +1881,9 @@ function AdminDashboard({ user, adminConfig }: { user: UserProfile, adminConfig:
                                   <p className="font-black text-slate-900 text-sm">{item.student.displayName}</p>
                                   <p className="text-[11px] text-slate-400">{item.student.email}</p>
                                 </div>
+                                {item.rank <= 14 && (
+                                  <span className="px-2 py-0.5 bg-green-600 text-white text-[9px] font-black uppercase tracking-widest rounded-md">Qualified</span>
+                                )}
                               </div>
                             </td>
                             <td className="px-8 py-5 font-black text-slate-700 text-sm">{item.student.rollNumber || '—'}</td>
