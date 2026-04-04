@@ -1861,10 +1861,8 @@ function AdminDashboard({ user, adminConfig }: { user: UserProfile, adminConfig:
                           <tr>
                             <td colSpan={5} className="px-8 py-10 text-center text-slate-400 font-medium text-sm italic">No response data yet.</td>
                           </tr>
-                        ) : {studentRankingData.map((item) => {
-  const isQualified = item.rank <= 14;
-  return (
-    <tr key={item.student.uid} className={`transition-colors ${isQualified ? 'bg-green-50 hover:bg-green-100' : 'hover:bg-slate-50/60'}`}>
+                        ) : studentRankingData.map((item) => (
+                          <tr key={item.student.uid} className={`transition-colors ${item.rank <= 14 ? 'bg-green-50 hover:bg-green-100' : 'hover:bg-slate-50/60'}`}>
                             <td className="px-8 py-5">
                               <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm
                                 ${item.rank === 1 ? 'bg-amber-400 text-white' :
