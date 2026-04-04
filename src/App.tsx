@@ -1861,35 +1861,51 @@ function AdminDashboard({ user, adminConfig }: { user: UserProfile, adminConfig:
                           <tr>
                             <td colSpan={5} className="px-8 py-10 text-center text-slate-400 font-medium text-sm italic">No response data yet.</td>
                           </tr>
-                        ) : studentRankingData.map((item) => (
-                          <tr key={item.student.uid} className="hover:bg-slate-50/60 transition-colors">
-                            <td className="px-8 py-5">
-                              <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm
-                                ${item.rank === 1 ? 'bg-amber-400 text-white' :
-                                  item.rank === 2 ? 'bg-slate-300 text-white' :
-                                  item.rank === 3 ? 'bg-orange-300 text-white' :
-                                  'bg-slate-100 text-slate-500'}`}>
-                                {item.rank}
-                              </div>
-                            </td>
-                            <td className="px-8 py-5">
-                              <div className="flex items-center gap-3">
-                                <div className="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center text-white font-black text-sm">
-                                  {item.student.displayName[0]}
-                                </div>
-                                <div>
-                                  <p className="font-black text-slate-900 text-sm">{item.student.displayName}</p>
-                                  <p className="text-[11px] text-slate-400">{item.student.email}</p>
-                                </div>
-                              </div>
-                            </td>
-                            <td className="px-8 py-5 font-black text-slate-700 text-sm">{item.student.rollNumber || '—'}</td>
-                            <td className="px-8 py-5">
-                              <span className="text-xl font-black text-slate-900" style={{fontFamily:'Clash Display, sans-serif'}}>{item.totalScore}</span>
-                            </td>
-                            <td className="px-8 py-5 font-bold text-slate-500 text-sm">{item.totalResponses}</td>
-                          </tr>
-                        ))}
+                        ) : {studentRankingData.map((item) => {
+  const isQualified = item.rank <= 14;
+  return (
+    <tr
+      key={item.student.uid}
+      className={`transition-colors ${
+        isQualified
+          ? 'bg-green-50 hover:bg-green-100 border-b border-green-100'
+          : 'hover:bg-slate-50/60 border-b border-slate-50'
+      }`}
+    >
+      <td className="px-8 py-5">
+        <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-sm
+          ${item.rank === 1 ? 'bg-amber-400 text-white' :
+            item.rank === 2 ? 'bg-slate-300 text-white' :
+            item.rank === 3 ? 'bg-orange-300 text-white' :
+            isQualified ? 'bg-green-200 text-green-800' :
+            'bg-slate-100 text-slate-500'}`}>
+          {item.rank}
+        </div>
+      </td>
+      <td className="px-8 py-5">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-slate-900 flex items-center justify-center text-white font-black text-sm">
+            {item.student.displayName[0]}
+          </div>
+          <div>
+            <p className="font-black text-slate-900 text-sm">{item.student.displayName}</p>
+            <p className="text-[11px] text-slate-400">{item.student.email}</p>
+          </div>
+          {isQualified && (
+            <span className="px-2 py-0.5 bg-green-100 text-green-700 text-[9px] font-black uppercase tracking-widest rounded-md border border-green-200">
+              Qualified
+            </span>
+          )}
+        </div>
+      </td>
+      <td className="px-8 py-5 font-black text-slate-700 text-sm">{item.student.rollNumber || '—'}</td>
+      <td className="px-8 py-5">
+        <span className="text-xl font-black text-slate-900" style={{fontFamily:'Clash Display, sans-serif'}}>{item.totalScore}</span>
+      </td>
+      <td className="px-8 py-5 font-bold text-slate-500 text-sm">{item.totalResponses}</td>
+    </tr>
+  );
+})}
                       </tbody>
                     </table>
                   </div>
